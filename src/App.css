@@ -1,0 +1,118 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  background: linear-gradient(159deg, #002147 0%, #4682B4 100%);
+}
+.app-main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 2rem 1.25rem;
+}
+.app-section {
+    width: min(100%, 30rem);
+}
+.app-title{
+    margin-bottom: 0;
+    font-size: 2.5rem;
+    line-height: 1.15;
+}
+.app-title, .app-subtitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+}
+.app-subtitle {
+    margin-bottom: 1.5rem;
+    font-size: 1.35rem;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    background-color: #002147;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 2.25rem;
+    gap: 1.25rem;
+    font-size: 1.1rem;
+}
+.form-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.form-input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.85rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font: inherit;
+}
+.form-button {
+    padding: 0.65rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font: inherit;
+    transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+.form-button:hover {
+    background-color: #1687ff;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
+    transform: translateY(-1px);
+}
+.form-button:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 3px;
+}
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+.form-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.form-footer-link {
+    margin: 0;
+    line-height: 1.5;
+}
+.anchor{
+    margin: 0;
+    text-decoration: none;
+    color: white;
+}
+.anchor:hover{
+    text-decoration: underline;
+    color: #ccc;
+}
+.anchor {
+    transition: color 160ms ease;
+}
+
+@media (max-width: 480px) {
+    .app-title {
+        font-size: 2rem;
+    }
+
+    .app-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .form-group {
+        padding: 1.5rem;
+    }
+}
