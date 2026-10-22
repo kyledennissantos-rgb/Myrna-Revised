@@ -164,6 +164,13 @@
   box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
   transform: translateY(-1px);
 }
+
+.option-active {
+  border-color: white;
+  background: #0056b3;
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 20%);
+}
+
 .dashboard-field-expenses {
   border-top-color: #4682b4;
 }
@@ -329,6 +336,42 @@ button:active {
   margin: 0;
   color: #d5e2ef;
   font-size: 0.9rem;
+}
+
+/* Display method-based category allocations separately from entered expenses. */
+.dashboard-allocations {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid rgb(255 255 255 / 30%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 6%);
+}
+
+.dashboard-allocation-heading {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.dashboard-allocation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.dashboard-allocation-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 3rem minmax(5rem, auto);
+  align-items: center;
+  gap: 0.75rem;
+  color: #e5edf5;
+}
+
+.dashboard-allocation-row > :last-child {
+  color: white;
+  text-align: right;
+  white-space: nowrap;
 }
 
 /* Separate the calculated monthly total from the editable expense rows. */

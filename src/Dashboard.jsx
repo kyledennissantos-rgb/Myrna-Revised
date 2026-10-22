@@ -1,10 +1,24 @@
 import './Dashboard.css'
 import { useState } from 'react'
 
+const budgetMethods = [
+  { id: '50-30-20', label: '50 / 30 / 20' },
+  { id: 'zero-based', label: 'Zero based' },
+  { id: 'self-love', label: 'Self Love' },
+  { id: 'envelope-system', label: 'Envelope System' },
+]
+
+const budgetAllocations = [
+  { name: 'Bills', percentage: 50 },
+  { name: 'Personal wants', percentage: 30 },
+  { name: 'Savings', percentage: 20 },
+]
+
 function Dashboard() {
   // Keep each expense name and amount together so rows can be edited independently.
   const [expenses, setExpenses] = useState([])
   const [budgetMethod, setBudgetMethod] = useState('50-30-20')
+  const [salary, setSalary] = useState('')
 
   // Sum all entered amounts, treating blank fields as zero.
   const expenseTotal = expenses.reduce(
@@ -66,56 +80,61 @@ function Dashboard() {
 
           <div className="dashboard-actions">
             {/* Salary remains one monthly amount, separate from individual expenses. */}
-            <label className="dashboard-field dashboard-field-income">
-              <span className="dashboard-field-label">Monthly salary</span>
+            <div className="dashboard-field dashboard-field-income">
+              <label className="dashboard-field-label" htmlFor="monthly-salary">Monthly salary</label>
               <span className="dashboard-input-wrap">
                 <span className="dashboard-currency" aria-hidden="true">₱</span>
-                <input className="dashboard-input" type="number" min="0" step="0.01" placeholder="0.00" />
+                <input
+                  className="dashboard-input"
+                  id="monthly-salary"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="0.00"
+                  value={salary}
+                  onChange={(event) => setSalary(event.target.value)}
+                />
               </span>
 
               <div className="options-container">
                 <span className="dashboard-field-label">Budget Method</span>
-                <button
-                  className={`option ${budgetMethod === '50-30-20' ? 'option-active' : ''}`}
-                  type="button"
-                  aria-pressed={budgetMethod === '50-30-20'}
-                  onClick={() => setBudgetMethod('50-30-20')}
-                >
-                  50 / 30 / 20
-                </button>
-                
-                <button
-                  className={`option ${budgetMethod === '50-30-20' ? 'option-active' : ''}`}
-                  type="button"
-                  aria-pressed={budgetMethod === '50-30-20'}
-                  onClick={() => setBudgetMethod('50-30-20')}
-                >
-                  Zero based
-                </button>
-
-                <button
-                  className={`option ${budgetMethod === '50-30-20' ? 'option-active' : ''}`}
-                  type="button"
-                  aria-pressed={budgetMethod === '50-30-20'}
-                  onClick={() => setBudgetMethod('50-30-20')}
-                >
-                  Self Love
-                </button>
-
-                <button
-                  className={`option ${budgetMethod === '50-30-20' ? 'option-active' : ''}`}
-                  type="button"
-                  aria-pressed={budgetMethod === '50-30-20'}
-                  onClick={() => setBudgetMethod('50-30-20')}
-                >
-                  Envelope System
-                </button>
+                {budgetMethods.map((method) => (
+                  <button
+                    className={`option ${budgetMethod === method.id ? 'option-active' : ''}`}
+                    key={method.id}
+                    type="button"
+                    aria-pressed={budgetMethod === method.id}
+                    onClick={() => setBudgetMethod(method.id)}
+                  >
+                    {method.label}
+                  </button>
+                ))}
               </div>
-            </label>       
+            </div>
 
             {/* Each expense card contains its own editable list and live total. */}
             <div className="dashboard-field dashboard-field-expenses">
               <span className="dashboard-field-label">Specific expenses</span>
+
+              {budgetMethod === '50-30-20' && (
+                <section className="dashboard-allocations" aria-label="50 / 30 / 20 budget allocation">
+                  <h3 className="dashboard-allocation-heading">Monthly allocation</h3>
+                  <div className="dashboard-allocation-list">
+                    {budgetAllocations.map((allocation) => (
+                      <div className="dashboard-allocation-row" key={allocation.name}>
+                        <span>{allocation.name}</span>
+                        <span>{allocation.percentage}%</span>
+                        <strong>
+                          ₱{((Number(salary) || 0) * allocation.percentage / 100).toLocaleString('en-PH', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </strong>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               {/* Show a helpful prompt until the user adds their first expense. */}
               {expenses.length === 0 && (
@@ -174,14 +193,6 @@ function Dashboard() {
                   })}
                 </strong>
               </div>
-              <label>
-                  Total Wants
-                  
-                </label>
-
-                <label>
-                  Total Savings
-                </label>
             </div>
             
           </div>
