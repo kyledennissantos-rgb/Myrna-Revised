@@ -71,7 +71,15 @@ function Dashboard() {
                 <span className="dashboard-currency" aria-hidden="true">₱</span>
                 <input className="dashboard-input" type="number" min="0" step="0.01" placeholder="0.00" />
               </span>
-            </label>
+
+              <div className="options-container">
+                <span className="dashboard-field-label">Budget Method</span>
+                <button className="option" type="button">50 / 30 / 20</button>
+                <button className="option" type="button">Zero Based</button>
+                <button className="option" type="button">Self Love</button>
+                <button className="option" type="button">Envelope System</button>
+              </div>
+            </label>       
 
             {/* Each expense card contains its own editable list and live total. */}
             <div className="dashboard-field dashboard-field-expenses">
@@ -134,7 +142,9 @@ function Dashboard() {
                   })}
                 </strong>
               </div>
+              
             </div>
+            
           </div>
         </div>
       </section>

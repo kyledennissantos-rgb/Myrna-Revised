@@ -136,7 +136,34 @@
   background: #002147;
   box-shadow: 0 8px 24px rgb(0 0 0 / 16%);
 }
+.options-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
 
+.option {
+   display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 10rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: 8px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.option:hover {
+  background: #1687ff;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
+  transform: translateY(-1px);
+}
 .dashboard-field-expenses {
   border-top-color: #4682b4;
 }
@@ -268,10 +295,17 @@
   transform: translateY(-1px);
 }
 
+.option:focus-visible,
 .dashboard-add-button:focus-visible,
 .dashboard-expense-remove:focus-visible {
   outline: 2px solid white;
   outline-offset: 3px;
+}
+
+button:active {
+  box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+  transform: scale(0.97);
+  transition-duration: 80ms;
 }
 
 /* Keep removal available but visually secondary to adding an expense. */
@@ -283,7 +317,7 @@
   color: white;
   cursor: pointer;
   font: inherit;
-  transition: background-color 160ms ease;
+  transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 .dashboard-expense-remove:hover {
