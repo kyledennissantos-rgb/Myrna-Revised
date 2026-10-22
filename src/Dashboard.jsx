@@ -4,6 +4,7 @@ import { useState } from 'react'
 function Dashboard() {
   // Keep each expense name and amount together so rows can be edited independently.
   const [expenses, setExpenses] = useState([])
+  const [budgetMethod, setBudgetMethod] = useState('50-30-20')
 
   // Sum all entered amounts, treating blank fields as zero.
   const expenseTotal = expenses.reduce(
@@ -74,10 +75,41 @@ function Dashboard() {
 
               <div className="options-container">
                 <span className="dashboard-field-label">Budget Method</span>
-                <button className="option" type="button">50 / 30 / 20</button>
-                <button className="option" type="button">Zero Based</button>
-                <button className="option" type="button">Self Love</button>
-                <button className="option" type="button">Envelope System</button>
+                <button
+                  className={`option ${budgetMethod === '50-30-20' ? 'option-active' : ''}`}
+                  type="button"
+                  aria-pressed={budgetMethod === '50-30-20'}
+                  onClick={() => setBudgetMethod('50-30-20')}
+                >
+                  50 / 30 / 20
+                </button>
+                
+                <button
+                  className={`option ${budgetMethod === '50-30-20' ? 'option-active' : ''}`}
+                  type="button"
+                  aria-pressed={budgetMethod === '50-30-20'}
+                  onClick={() => setBudgetMethod('50-30-20')}
+                >
+                  Zero based
+                </button>
+
+                <button
+                  className={`option ${budgetMethod === '50-30-20' ? 'option-active' : ''}`}
+                  type="button"
+                  aria-pressed={budgetMethod === '50-30-20'}
+                  onClick={() => setBudgetMethod('50-30-20')}
+                >
+                  Self Love
+                </button>
+
+                <button
+                  className={`option ${budgetMethod === '50-30-20' ? 'option-active' : ''}`}
+                  type="button"
+                  aria-pressed={budgetMethod === '50-30-20'}
+                  onClick={() => setBudgetMethod('50-30-20')}
+                >
+                  Envelope System
+                </button>
               </div>
             </label>       
 
@@ -142,7 +174,14 @@ function Dashboard() {
                   })}
                 </strong>
               </div>
-              
+              <label>
+                  Total Wants
+                  
+                </label>
+
+                <label>
+                  Total Savings
+                </label>
             </div>
             
           </div>
