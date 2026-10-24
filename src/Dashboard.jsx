@@ -8,16 +8,23 @@ const budgetMethods = [
   { id: 'envelope-system', label: 'Envelope System' },
 ]
 
-const budgetAllocations = [
+const budgetAllocations1 = [
   { name: 'Bills', percentage: 50 },
   { name: 'Personal wants', percentage: 30 },
   { name: 'Savings', percentage: 20 },
+]
+ 
+const budgetAllocations2 = [
+  // { name: 'Expenpense'},
+  // { name: 'Excess'},
+  // { name: 'Equals'},
 ]
 
 function Dashboard() {
   // Keep each expense name and amount together so rows can be edited independently.
   const [expenses, setExpenses] = useState([])
   const [budgetMethod, setBudgetMethod] = useState('50-30-20')
+  const [budgetMethod2, setBudgetMethod2] = useState('Zero based')
   const [salary, setSalary] = useState('')
 
   // Sum all entered amounts, treating blank fields as zero.
@@ -81,7 +88,7 @@ function Dashboard() {
           <div className="dashboard-actions">
             {/* Salary remains one monthly amount, separate from individual expenses. */}
             <div className="dashboard-field dashboard-field-income">
-              <label className="dashboard-field-label" htmlFor="monthly-salary">Monthly salary</label>
+              <label id='total' className="dashboard-field-label" htmlFor="monthly-salary">Monthly salary</label>
               <span className="dashboard-input-wrap">
                 <span className="dashboard-currency" aria-hidden="true">₱</span>
                 <input
@@ -109,7 +116,11 @@ function Dashboard() {
                     {method.label}
                   </button>
                 ))}
+
+                
               </div>
+
+              
             </div>
 
             {/* Each expense card contains its own editable list and live total. */}
@@ -120,7 +131,7 @@ function Dashboard() {
                 <section className="dashboard-allocations" aria-label="50 / 30 / 20 budget allocation">
                   <h3 className="dashboard-allocation-heading">Monthly allocation</h3>
                   <div className="dashboard-allocation-list">
-                    {budgetAllocations.map((allocation) => (
+                    {budgetAllocations1.map((allocation) => (
                       <div className="dashboard-allocation-row" key={allocation.name}>
                         <span>{allocation.name}</span>
                         <span>{allocation.percentage}%</span>
@@ -136,63 +147,69 @@ function Dashboard() {
                 </section>
               )}
 
-              {/* Show a helpful prompt until the user adds their first expense. */}
-              {expenses.length === 0 && (
-                <p className="dashboard-expense-empty">No expenses added yet.</p>
-              )}
+              
 
-              {/* Render one name and amount input pair for every expense. */}
-              <div className="dashboard-expense-list">
-                {expenses.map((expense, index) => (
-                  <div className="dashboard-expense-row" key={expense.id}>
-                    <input
-                      className="dashboard-expense-input"
-                      type="text"
-                      placeholder="Expense name"
-                      aria-label={`Expense name ${index + 1}`}
-                      value={expense.name}
-                      onChange={(event) => updateExpense(expense.id, 'name', event.target.value)}
-                    />
-                    <span className="dashboard-expense-amount">
-                      <span aria-hidden="true">₱</span>
+              {budgetMethod === 'zero-based' && (
+                <>
+                 <div className="dashboard-expense-list">
+                    <button className="dashboard-add-button" type="button" onClick={addExpense}>
+                    + Add expense
+                  </button>
+                  
+                  {/* Show a helpful prompt until the user adds their first expense. */}
+                  {expenses.length === 0 && (
+                    <p className="dashboard-expense-empty">No expenses added yet.</p>
+                  )}
+
+                  {/* Render one name and amount input pair for every expense. */}
+
+                    {expenses.map((expense, index) => (
+                      <div className="dashboard-expense-row" key={expense.id}>
                       <input
                         className="dashboard-expense-input"
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        placeholder="0.00"
-                        aria-label={`Amount for ${expense.name || `expense ${index + 1}`}`}
-                        value={expense.amount}
-                        onChange={(event) => updateExpense(expense.id, 'amount', event.target.value)}
+                        type="text"
+                        placeholder="Expense name"
+                        aria-label={`Expense name ${index + 1}`}
+                        value={expense.name}
+                        onChange={(event) => updateExpense(expense.id, 'name', event.target.value)}
                       />
-                    </span>
-                    <button
-                      className="dashboard-expense-remove"
-                      type="button"
-                      aria-label={`Remove ${expense.name || `expense ${index + 1}`}`}
-                      onClick={() => removeExpense(expense.id)}
-                    >
-                      Remove
-                    </button>
+                      <span className="dashboard-expense-amount">
+                        <span aria-hidden="true">₱</span>
+                        <input
+                          className="dashboard-expense-input"
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          placeholder="0.00"
+                          aria-label={`Amount for ${expense.name || `expense ${index + 1}`}`}
+                          value={expense.amount}
+                          onChange={(event) => updateExpense(expense.id, 'amount', event.target.value)}
+                        />
+                      </span>
+                      <button
+                        className="dashboard-expense-remove"
+                        type="button"
+                        aria-label={`Remove ${expense.name || `expense ${index + 1}`}`}
+                        onClick={() => removeExpense(expense.id)}
+                      >
+                        Remove
+                      </button>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
 
-              {/* Add another blank row without changing existing expenses. */}
-              <button className="dashboard-add-button" type="button" onClick={addExpense}>
-                + Add expense
-              </button>
-
-              {/* Format and display the sum of the amount fields. */}
-              <div className="dashboard-expense-total" aria-live="polite">
-                <span>Total monthly expenses</span>
-                <strong>
-                  ₱{expenseTotal.toLocaleString('en-PH', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </strong>
-              </div>
+                  {/* Format and display the sum of the amount fields. */}
+                  <div className="dashboard-expense-total" aria-live="polite">
+                    <span>Total monthly expenses</span>
+                    <strong>
+                      ₱{expenseTotal.toLocaleString('en-PH', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                      })}
+                    </strong>
+                  </div>
+                </>
+              )}
             </div>
             
           </div>
